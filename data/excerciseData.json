@@ -1,0 +1,28 @@
+{
+  "excercises": [
+    {
+      "id": 1,
+      "title": "nodeJS Tutorial",
+      "description": "Learning nodeJS crud app for begginers",
+      "createdBy": "John Doe"
+    },
+    {
+      "id": 2,
+      "title": "Structured Programming",
+      "description": "Structured Programming with Language C",
+      "createdBy": "Watson Watson"
+    },
+    {
+      "id": 3,
+      "title": "React Basics",
+      "description": "Introduction of React",
+      "createdBy": "Sunil Sunil"
+    },
+    {
+      "id": 759202,
+      "title": "Software Architecture",
+      "description": "Completing Software Architecture MCQ questions",
+      "createdBy": "Shan Shan"
+    }
+  ]
+}
