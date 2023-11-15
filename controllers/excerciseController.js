@@ -34,36 +34,65 @@ const createExcercise = (req, res) => {
     res.send({success: true, msg: 'Excercise added successfully'})
 };
 
+
 //get all excercises
 const getAllExcercises = (req, res) => {
     const excercises = getExcerciseData();
     res.send(excercises);
 }
 
+
+//get excercise by id
+const getExcercise = (req, res) => {
+    const existExcercises = getExcerciseData();
+
+    // grab the excercise id from params
+    const excerciseId = +req.params.id; //since params.id is a string (+) is used to make it number
+
+    // find exercise using id
+    var excercise = existExcercises.excercises.find(ex => {
+    return ex.id === excerciseId;
+    });
+
+    res.send(excercise);
+}
+
+
 //update excercise by id
 const updateExcercise = (req, res) => {
     var existExcercises = getExcerciseData()
 
-    fs.readFile(dataPath, 'utf8', (err, data) => {
-        // Find the excercise to update
-        const excerciseId = +req.params.id; //since params.id is a string (+) is used to make it number
+    // Find the excercise to update
+    const excerciseId = +req.params.id;
 
-        // Check each exercise in the array for its ID
-        var excerciseToUpdate = existExcercises.excercises.find(ex => {
-        return ex.id === excerciseId;
-        });
+    // Check each exercise in the array for its ID
+    var excerciseToUpdate = existExcercises.excercises.find(ex => {
+    return ex.id === excerciseId;
+    });
 
-        // Update the excercise
-        if (excerciseToUpdate) {
-            excerciseToUpdate = req.body;
-        } else {
-            console.log(`Exercise with ID ${excerciseId} not found.`);
-        }
+    // Update the excercise
+    if (excerciseToUpdate) {
+        Object.assign(excerciseToUpdate, req.body);
+        console.log(`accounts with id ${excerciseId} has been updated`);
+    } else {
+        console.log(`Exercise with ID ${excerciseId} not found.`);
+ }
+ 
+ // save data back to the JSON file
+ saveExcerciseData(existExcercises);
+ res.send(`accounts with id ${excerciseId} has been updated`)
+};
 
-        // save data back to the JSON file
-        saveExcerciseData(existExcercises);
-        res.send(`accounts with id ${excerciseId} has been updated`)
-    }, true);
-  };
+// delete excercise by id
+const deleteExcercise = (req, res) => {
+    var existExcercises = getExcerciseData()
+      const excerciseId = +req.params.id;
 
-module.exports = { createExcercise, getAllExcercises, updateExcercise }
+      // Filter out the exercise with the given ID
+      existExcercises.excercises = existExcercises.excercises.filter(exercise => exercise.id !== excerciseId);
+
+      saveExcerciseData(existExcercises);
+      res.send(`accounts with id ${excerciseId} has been deleted`)
+}
+
+module.exports = { createExcercise, getAllExcercises, getExcercise, updateExcercise,deleteExcercise }
